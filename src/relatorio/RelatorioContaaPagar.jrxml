@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="17f83620-9847-4b56-85af-a9e62ee9e56a">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="caixa" class="modelo.Caixa">
+		<fieldDescription><![CDATA[caixa]]></fieldDescription>
+	</field>
+	<field name="class" class="java.lang.Class">
+		<fieldDescription><![CDATA[class]]></fieldDescription>
+	</field>
+	<field name="compraProduto" class="modelo.CompraProduto">
+		<fieldDescription><![CDATA[compraProduto]]></fieldDescription>
+	</field>
+	<field name="dataPaga" class="java.util.Date">
+		<fieldDescription><![CDATA[dataPaga]]></fieldDescription>
+	</field>
+	<field name="dataVencimento" class="java.util.Date">
+		<fieldDescription><![CDATA[dataVencimento]]></fieldDescription>
+	</field>
+	<field name="desconto" class="java.lang.Double">
+		<fieldDescription><![CDATA[desconto]]></fieldDescription>
+	</field>
+	<field name="descricao" class="java.lang.String">
+		<fieldDescription><![CDATA[descricao]]></fieldDescription>
+	</field>
+	<field name="juros" class="java.lang.Double">
+		<fieldDescription><![CDATA[juros]]></fieldDescription>
+	</field>
+	<field name="numeroParcela" class="java.lang.Integer">
+		<fieldDescription><![CDATA[numeroParcela]]></fieldDescription>
+	</field>
+	<field name="observacao" class="java.lang.String">
+		<fieldDescription><![CDATA[observacao]]></fieldDescription>
+	</field>
+	<field name="pagCod" class="java.lang.Integer">
+		<fieldDescription><![CDATA[pagCod]]></fieldDescription>
+	</field>
+	<field name="valorPagar" class="java.lang.Double">
+		<fieldDescription><![CDATA[valorPagar]]></fieldDescription>
+	</field>
+	<variable name="total" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{valorPagar}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="42" splitType="Stretch">
+			<staticText>
+				<reportElement x="162" y="0" width="222" height="41" uuid="1eab9967-fdd0-4cbb-94da-ef20e248be2c"/>
+				<textElement verticalAlignment="Top">
+					<font size="30" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Contas à Pagar]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="62" splitType="Stretch">
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="425" y="31" width="130" height="20" uuid="5050723d-428f-4d48-a293-dba20e16e632"/>
+				<textElement textAlignment="Right">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{valorPagar}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="115" y="31" width="167" height="20" uuid="3a743ded-e31c-4262-9e05-26a0055e9275"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dataVencimento}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="0" y="1" width="555" height="21" backcolor="#0000CC" uuid="6ec08a78-e362-4e7e-8448-4d4a393570e9"/>
+			</rectangle>
+			<textField>
+				<reportElement x="56" y="2" width="499" height="20" forecolor="#FFFFFF" uuid="e623e629-f8b5-4acf-b701-b965cc262045"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{descricao}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="56" height="22" forecolor="#FFFFFF" uuid="68e9e30e-60e7-4e10-8134-9580aadd88ca"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Conta:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="365" y="26" width="60" height="27" uuid="7e16d518-7ae7-4493-8843-8ddc4f72cec3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="20"/>
+				</textElement>
+				<text><![CDATA[Valor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="5" y="26" width="110" height="31" uuid="3917f386-70f9-475c-a649-323f17175134"/>
+				<textElement verticalAlignment="Middle">
+					<font size="20"/>
+				</textElement>
+				<text><![CDATA[Vencimento]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="57" width="555" height="1" uuid="0d0bd9c6-c281-4ee3-9403-11e0ef1e8c41"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="26" splitType="Stretch">
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="455" y="2" width="100" height="20" uuid="94961b02-41be-4805-926f-3de2f164d256"/>
+				<textElement textAlignment="Right">
+					<font size="13" isBold="true" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{total}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="301" y="0" width="154" height="20" uuid="aec337bf-69d2-433c-b37d-1474411bbfff"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[VALOR TOTAL À PAGAR:]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

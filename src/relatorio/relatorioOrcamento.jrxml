@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="78179c46-6f17-4053-ae02-5e27023fe43d">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\Maycon\\Documents\\NetBeansProjects\\DepositoDeBebidass\\src\\relatorio\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="bairroEntrega" class="java.lang.String">
+		<fieldDescription><![CDATA[bairroEntrega]]></fieldDescription>
+	</field>
+	<field name="cidadeEntrega" class="java.lang.String">
+		<fieldDescription><![CDATA[cidadeEntrega]]></fieldDescription>
+	</field>
+	<field name="class" class="java.lang.Class">
+		<fieldDescription><![CDATA[class]]></fieldDescription>
+	</field>
+	<field name="clienteCod" class="modelo.Cliente">
+		<fieldDescription><![CDATA[clienteCod]]></fieldDescription>
+	</field>
+	<field name="dataAprovacao" class="java.util.Date">
+		<fieldDescription><![CDATA[dataAprovacao]]></fieldDescription>
+	</field>
+	<field name="dataDevolucao" class="java.util.Date">
+		<fieldDescription><![CDATA[dataDevolucao]]></fieldDescription>
+	</field>
+	<field name="dataEntrega" class="java.util.Date">
+		<fieldDescription><![CDATA[dataEntrega]]></fieldDescription>
+	</field>
+	<field name="dataEvento" class="java.util.Date">
+		<fieldDescription><![CDATA[dataEvento]]></fieldDescription>
+	</field>
+	<field name="dataRealizado" class="java.util.Date">
+		<fieldDescription><![CDATA[dataRealizado]]></fieldDescription>
+	</field>
+	<field name="dataVencimento" class="java.util.Date">
+		<fieldDescription><![CDATA[dataVencimento]]></fieldDescription>
+	</field>
+	<field name="listaDevolvidoValor" class="java.lang.Double">
+		<fieldDescription><![CDATA[listaDevolvidoValor]]></fieldDescription>
+	</field>
+	<field name="listaOrcamento" class="java.util.List">
+		<fieldDescription><![CDATA[listaOrcamento]]></fieldDescription>
+	</field>
+	<field name="listaValor" class="java.lang.Double">
+		<fieldDescription><![CDATA[listaValor]]></fieldDescription>
+	</field>
+	<field name="numeroEntrega" class="java.lang.Integer">
+		<fieldDescription><![CDATA[numeroEntrega]]></fieldDescription>
+	</field>
+	<field name="observacao" class="java.lang.String">
+		<fieldDescription><![CDATA[observacao]]></fieldDescription>
+	</field>
+	<field name="orcCod" class="java.lang.Integer">
+		<fieldDescription><![CDATA[orcCod]]></fieldDescription>
+	</field>
+	<field name="ruaEntrega" class="java.lang.String">
+		<fieldDescription><![CDATA[ruaEntrega]]></fieldDescription>
+	</field>
+	<field name="valorOrc" class="java.lang.Double">
+		<fieldDescription><![CDATA[valorOrc]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="64" splitType="Stretch">
+			<staticText>
+				<reportElement x="4" y="0" width="551" height="50" uuid="f7129a1b-aa7a-47e9-9c9c-ddd978aeebae"/>
+				<textElement>
+					<font size="37"/>
+				</textElement>
+				<text><![CDATA[ORÇAMENTO PARA ENTREGA]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="219" splitType="Stretch">
+			<rectangle>
+				<reportElement x="4" y="150" width="551" height="66" uuid="432232d1-c53b-410c-a394-3e9c3b4324a0"/>
+			</rectangle>
+			<staticText>
+				<reportElement mode="Opaque" x="12" y="142" width="94" height="20" uuid="8c2e4a4f-b241-426e-85cd-c07e01a1f6c9"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[OBSERVAÇÃO]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="4" y="163" width="551" height="53" uuid="533a7c41-2827-4f23-a9b2-0a5a933dd250"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{observacao}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="4" y="9" width="551" height="131" uuid="436fc113-0f63-474c-809c-60606254b0a5"/>
+			</rectangle>
+			<staticText>
+				<reportElement mode="Opaque" x="9" y="-1" width="167" height="20" uuid="f77c8717-c9d0-4ed5-a458-6e859fbb4ba1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[INFORMAÇÕES DO CLIENTE]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="3" y="19" width="551" height="20" backcolor="#0000FF" uuid="4326a3da-1d50-4cd8-a096-ec39931f861c"/>
+			</rectangle>
+			<textField>
+				<reportElement x="105" y="19" width="449" height="20" forecolor="#FFFFFF" uuid="32240127-6e53-444c-98ac-7f5f2b86c48d"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{clienteCod}.getClienteNome()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="6" y="19" width="88" height="20" forecolor="#FFFFFF" uuid="3466a386-f7c2-4c8f-b5af-b0f0842d33cf"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nome Cliente:]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="13" y="54" width="533" height="76" uuid="2111362b-dd9b-4d97-a538-976ceec6c9bb"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="25" y="69" width="48" height="20" uuid="f676b7cd-86ac-4137-afbf-45718c640e38"/>
+				<textElement verticalAlignment="Top">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cidade:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="94" y="69" width="448" height="20" uuid="e679e0c8-f0a9-4142-8092-1bc6f6b41942"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cidadeEntrega}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="23" y="104" width="60" height="20" uuid="6f441f27-8745-4862-ae2e-04d611c08adb"/>
+				<textElement verticalAlignment="Top">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Endereço:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="21" y="44" width="151" height="20" uuid="dd1265d1-c747-4a9d-bc71-f1e7f8dc6299"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LOCAL PARA ENTREGA]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="94" y="105" width="448" height="20" uuid="cea1921a-54e3-4a95-bf84-660caded7cc7"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" Rua: "+$F{ruaEntrega}+", Nº "+$F{numeroEntrega}+",  Bairro: "+$F{bairroEntrega}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="102" splitType="Stretch">
+			<subreport>
+				<reportElement x="0" y="0" width="200" height="100" uuid="7bb1a719-9b22-4b3f-b5a1-4ac80160690f"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{listaOrcamento})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "relatorioOrcamento_subreport1.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="93" splitType="Stretch">
+			<staticText>
+				<reportElement x="2" y="53" width="551" height="18" uuid="9a71ffcb-c662-46b7-958c-567a3378a57f"/>
+				<textElement verticalAlignment="Bottom"/>
+				<text><![CDATA[______________________________________________________________________________________________________]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="83" y="71" width="366" height="20" uuid="5a047b8d-91d5-4609-b85b-12d837464fd8"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ASSINATURA DO CLIENTE OU DA PESSOA QUE RECEBEU OS PRODUTOS]]></text>
+			</staticText>
+			<line>
+				<reportElement x="3" y="3" width="551" height="1" uuid="3c3549f8-030a-4ec9-86e4-97846654d074"/>
+			</line>
+			<staticText>
+				<reportElement x="160" y="12" width="162" height="29" uuid="910e06f1-83cf-47b7-90ab-938230133875"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[______/_____/___________]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="6" y="12" width="154" height="29" uuid="d0ece516-e59b-4476-a100-9103e15bfe5f"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DATA DE RECEBIMENTO:]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

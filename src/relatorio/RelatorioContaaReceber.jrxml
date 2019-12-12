@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1b6c3cdd-13d9-40ba-8de3-84038b417cf6">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\Maycon\\Documents\\NetBeansProjects\\DepositoDeBebidass\\src\\relatorio\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="class" class="java.lang.Class">
+		<fieldDescription><![CDATA[class]]></fieldDescription>
+	</field>
+	<field name="clienteCod" class="modelo.Cliente">
+		<fieldDescription><![CDATA[clienteCod]]></fieldDescription>
+	</field>
+	<field name="listaRecebimento" class="java.util.List">
+		<fieldDescription><![CDATA[listaRecebimento]]></fieldDescription>
+	</field>
+	<field name="listaVenda" class="java.util.List">
+		<fieldDescription><![CDATA[listaVenda]]></fieldDescription>
+	</field>
+	<field name="nrNota" class="java.lang.Integer">
+		<fieldDescription><![CDATA[nrNota]]></fieldDescription>
+	</field>
+	<field name="status" class="java.lang.String">
+		<fieldDescription><![CDATA[status]]></fieldDescription>
+	</field>
+	<field name="totalRecebido" class="java.lang.Double">
+		<fieldDescription><![CDATA[totalRecebido]]></fieldDescription>
+	</field>
+	<field name="totalVenda" class="java.lang.Double">
+		<fieldDescription><![CDATA[totalVenda]]></fieldDescription>
+	</field>
+	<field name="vendaCod" class="java.lang.Integer">
+		<fieldDescription><![CDATA[vendaCod]]></fieldDescription>
+	</field>
+	<field name="vendaData" class="java.util.Date">
+		<fieldDescription><![CDATA[vendaData]]></fieldDescription>
+	</field>
+	<field name="vendaHora" class="java.util.Date">
+		<fieldDescription><![CDATA[vendaHora]]></fieldDescription>
+	</field>
+	<field name="vendaTotal" class="java.lang.Double">
+		<fieldDescription><![CDATA[vendaTotal]]></fieldDescription>
+	</field>
+	<group name="GruopPorCliente">
+		<groupExpression><![CDATA[$F{clienteCod}]]></groupExpression>
+		<groupHeader>
+			<band height="34">
+				<rectangle>
+					<reportElement x="0" y="2" width="555" height="30" backcolor="#0000CC" uuid="ad16df12-ece3-4358-b8ce-8d27e3e5d3bb"/>
+				</rectangle>
+				<staticText>
+					<reportElement x="0" y="3" width="195" height="30" forecolor="#FFFFFF" uuid="137a43a7-0223-4763-85f8-b2b261e18169"/>
+					<textElement verticalAlignment="Middle">
+						<font size="20" isBold="true"/>
+					</textElement>
+					<text><![CDATA[NOME DO CLIENTE:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="199" y="3" width="270" height="30" forecolor="#FFFFFF" uuid="ca85a83b-2e6f-481b-b80a-d40756f55d36"/>
+					<textElement verticalAlignment="Bottom">
+						<font size="18"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{clienteCod}.getClienteNome()]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement x="63" y="-16" width="419" height="35" uuid="10ff7cd6-6746-42ec-8704-a8855674020c"/>
+				<textElement>
+					<font size="24"/>
+				</textElement>
+				<text><![CDATA[CONTAS DE CLIENTES PENDENTES]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="103" splitType="Stretch">
+			<subreport>
+				<reportElement x="0" y="0" width="325" height="103" uuid="5a775943-b603-4c5b-b2a0-c464be7d3a0c"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{listaVenda})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "RelatorioContaaReceber_subreport1.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

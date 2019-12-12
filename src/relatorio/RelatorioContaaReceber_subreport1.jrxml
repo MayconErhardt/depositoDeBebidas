@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RelatorioContaaReceber_subreport1" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="b22bb075-8bcd-41b9-97bc-300c4eeab8e0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="class" class="java.lang.Class">
+		<fieldDescription><![CDATA[class]]></fieldDescription>
+	</field>
+	<field name="nrItem" class="java.lang.Integer">
+		<fieldDescription><![CDATA[nrItem]]></fieldDescription>
+	</field>
+	<field name="produtoCod" class="modelo.Produto">
+		<fieldDescription><![CDATA[produtoCod]]></fieldDescription>
+	</field>
+	<field name="quantidade" class="java.lang.Integer">
+		<fieldDescription><![CDATA[quantidade]]></fieldDescription>
+	</field>
+	<field name="valor" class="java.lang.Double">
+		<fieldDescription><![CDATA[valor]]></fieldDescription>
+	</field>
+	<field name="vendaCod" class="modelo.Venda">
+		<fieldDescription><![CDATA[vendaCod]]></fieldDescription>
+	</field>
+	<variable name="quantidade_1" class="java.lang.Integer" resetType="Group" resetGroup="CompraClienteProduto" calculation="Sum">
+		<variableExpression><![CDATA[$F{quantidade}]]></variableExpression>
+	</variable>
+	<variable name="subTotal" class="java.lang.Double">
+		<variableExpression><![CDATA[$F{quantidade}*$F{valor}]]></variableExpression>
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
+	</variable>
+	<variable name="valorTotal" class="java.lang.Double" calculation="Sum"/>
+	<group name="CompraClienteProduto">
+		<groupExpression><![CDATA[$F{produtoCod}]]></groupExpression>
+		<groupHeader>
+			<band/>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="51" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="331" height="27" uuid="df193b90-24bb-4834-8ac2-8a36171e1e8f"/>
+				<textElement textAlignment="Justified">
+					<font size="20"/>
+				</textElement>
+				<text><![CDATA[PRODUTOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="29" width="61" height="20" uuid="77ad22b9-1186-4303-ba46-894f8de3be70"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[NOME]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="29" width="100" height="20" uuid="9b9ebdf3-925f-4de7-8d0a-c6f955d91014"/>
+				<textElement textAlignment="Right">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[VALOR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="331" y="29" width="100" height="20" uuid="42fade08-c3d4-4c42-979d-f87cbd2e83d5"/>
+				<textElement textAlignment="Right">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[QUANTIDADE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="452" y="29" width="100" height="20" uuid="018b3bd6-ad7e-479a-b28e-96a1a245d571"/>
+				<textElement textAlignment="Right">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[SUBTOTAL]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="181" height="20" uuid="05da211e-9139-4857-aad3-01ef455c9f28"/>
+				<textElement>
+					<font size="13" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{produtoCod}.getProdutoNome()]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="200" y="0" width="100" height="20" uuid="08040134-d3c6-4e46-ab2a-4148abbb0cac"/>
+				<textElement textAlignment="Right">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{valor}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Group" evaluationGroup="CompraClienteProduto">
+				<reportElement x="331" y="0" width="100" height="20" uuid="eca622a0-817c-4deb-a501-3dec7fd80418"/>
+				<textElement textAlignment="Right">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{quantidade_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="452" y="0" width="100" height="20" uuid="ad5ff060-6ec7-469a-bdf3-3d2a6e410057"/>
+				<textElement textAlignment="Right">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{subTotal}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="36" splitType="Stretch">
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="421" y="8" width="133" height="25" uuid="80539b60-0873-4474-bb7c-0974dfd06791"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font size="18"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vendaCod}.getVendaTotal()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="289" y="7" width="131" height="28" uuid="4df37259-36dc-4ee6-8d6d-8bf5dcf1d058"/>
+				<textElement>
+					<font size="18"/>
+				</textElement>
+				<text><![CDATA[VENDA TOTAL:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="3" width="555" height="2" uuid="c0aa23c7-a456-4009-ba7c-7193d92dddee"/>
+			</line>
+		</band>
+	</summary>
+</jasperReport>

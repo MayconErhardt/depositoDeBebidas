@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RelatorioPeriodoVenda_subreport1" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="56c29d7e-8861-4fe7-ab00-5bf939ffbedf">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="class" class="java.lang.Class">
+		<fieldDescription><![CDATA[class]]></fieldDescription>
+	</field>
+	<field name="nrItem" class="java.lang.Integer">
+		<fieldDescription><![CDATA[nrItem]]></fieldDescription>
+	</field>
+	<field name="produtoCod" class="modelo.Produto">
+		<fieldDescription><![CDATA[produtoCod]]></fieldDescription>
+	</field>
+	<field name="quantidade" class="java.lang.Integer">
+		<fieldDescription><![CDATA[quantidade]]></fieldDescription>
+	</field>
+	<field name="valor" class="java.lang.Double">
+		<fieldDescription><![CDATA[valor]]></fieldDescription>
+	</field>
+	<field name="vendaCod" class="modelo.Venda">
+		<fieldDescription><![CDATA[vendaCod]]></fieldDescription>
+	</field>
+	<variable name="quantidade_1" class="java.lang.Integer" resetType="Group" resetGroup="PordutoGrupo" calculation="Sum">
+		<variableExpression><![CDATA[$F{quantidade}]]></variableExpression>
+	</variable>
+	<variable name="vendaCod_1" class="java.lang.Integer" resetType="Group" resetGroup="PordutoGrupo" calculation="Count">
+		<variableExpression><![CDATA[$F{vendaCod}]]></variableExpression>
+	</variable>
+	<group name="PordutoGrupo">
+		<groupExpression><![CDATA[$F{produtoCod}.getProdutoNome()]]></groupExpression>
+		<groupHeader>
+			<band height="24">
+				<textField>
+					<reportElement x="34" y="1" width="158" height="20" uuid="0656042d-e92e-40f8-a2e7-166cbbab66ad"/>
+					<textFieldExpression><![CDATA[$F{produtoCod}.getProdutoNome()]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="PordutoGrupo">
+					<reportElement x="250" y="0" width="100" height="20" uuid="ec15155c-f53c-406f-a473-c67d1b33f8ad"/>
+					<textFieldExpression><![CDATA[$V{quantidade_1}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="51" splitType="Stretch">
+			<staticText>
+				<reportElement x="34" y="20" width="100" height="20" uuid="3feed096-66c3-44de-99ae-58f907b7eeb6"/>
+				<text><![CDATA[PRODUTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="250" y="20" width="100" height="20" uuid="eb2594d0-c2cf-499c-b752-d3ed00fa1493"/>
+				<text><![CDATA[QUANTIDADE]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

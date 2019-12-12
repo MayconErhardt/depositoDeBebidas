@@ -1,0 +1,1282 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package view.Fundamental.Orçamento;
+
+import controle.ControleOrcamento;
+import java.awt.Color;
+import java.awt.Font;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import javax.swing.BorderFactory;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
+import javax.swing.border.Border;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.xml.transform.Source;
+import modelo.Cliente;
+import modelo.Orcamento;
+import modelo.OrcamentoProduto;
+import modelo.Produto;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.view.JasperViewer;
+import static validacao.ValidaCampos.setMaxLength;
+import view.buscar.BuscarCliente;
+import view.buscar.BuscarProduto;
+import view.buscar.BuscarProdutoOrcamento;
+
+/**
+ *
+ * @author Maycon
+ */
+public class OrcamentoNovo extends javax.swing.JDialog {
+
+    /**
+     * Creates new form OrcamentoNovo
+     */
+    private DefaultTableModel orcamentoProduto;
+    SimpleDateFormat formatar = new SimpleDateFormat("dd/MM/yyyy");
+    DefaultTableCellRenderer direita = new DefaultTableCellRenderer();
+    DefaultTableCellRenderer esquerda = new DefaultTableCellRenderer();
+
+    private Cliente cliente;
+    private Produto produto;
+    private Orcamento orcamento;
+    ArrayList<OrcamentoProduto> listOrcamentoProduto = new ArrayList<>();
+
+    private Date hoje = new Date();
+    DefaultTableModel modelo;
+
+    private char status;
+    private boolean valor = true;
+
+    public OrcamentoNovo(java.awt.Frame parent, boolean modal, Orcamento orc) {
+        super(parent, modal);
+        initComponents();
+        modelo = (DefaultTableModel) tabProdutoOrcamento.getModel();
+        orcamentoProduto = (DefaultTableModel) tabProdutoOrcamento.getModel();
+        darTamanhoAColuna();
+
+        direita.setHorizontalAlignment(SwingConstants.RIGHT);
+        esquerda.setHorizontalAlignment(SwingConstants.LEFT);
+        tabProdutoOrcamento.setFont(new Font("SansSerif", Font.BOLD, 14));
+        Border emptyBorder = null;
+
+        direita.setBorder(emptyBorder);
+        direita.setBackground(new java.awt.Color(209, 209, 209));
+        direita.setForeground(new java.awt.Color(102, 102, 102));
+        esquerda.setBackground(new java.awt.Color(209, 209, 209));
+        esquerda.setForeground(new java.awt.Color(102, 102, 102));
+
+        tabProdutoOrcamento.getColumnModel().getColumn(1).setCellRenderer(direita);
+        tabProdutoOrcamento.getColumnModel().getColumn(2).setCellRenderer(direita);
+        tabProdutoOrcamento.getColumnModel().getColumn(3).setCellRenderer(direita);
+        tabProdutoOrcamento.getColumnModel().getColumn(0).setCellRenderer(esquerda);
+
+        setarCampoEndereçoFalse();
+
+        labDataRealizado.setText(formatar.format(hoje));
+        if (orc == null) {
+            orcamento = new Orcamento();
+            status = 'n';
+        } else {
+            if (orc.getDataAprovacao() == null) {
+                orcamento = orc;
+                labTitulo.setText("ALTERAR ORÇAMENTO");
+                setCamposOrcamento();
+                // atualizarTabela();
+                System.out.println(orc.getListaOrcamento());
+                status = 'a';
+            } else if (orc.getDataAprovacao() != null) {
+                status = 'c';
+                orcamento = orc;
+                labTitulo.setText("CONSIGNAR PRUDUTO");
+                setCamposOrcamento();
+                desabilitarCampos();
+                if (orcamento.getDataVencimento().before(hoje)) {
+                    ControleOrcamento contOrc = new ControleOrcamento();
+                    double x = contOrc.getValorAtualizado(orcamento);
+                    valor = false;
+                    botBuscarProduto.setVisible(true);
+                    labNomeProduto.setVisible(true);
+                    labNome.setVisible(true);
+                    labNome.setText("Valor Atualizado: ");
+                    labNomeProduto.setText(doubleString(x));
+                    botBuscarProduto.setText("ALTUALIZAR");
+                }
+            }
+        }
+        jTextAreaObservacao.setLineWrap(true);
+        validarCampos();
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        EnderecoProprio = new javax.swing.ButtonGroup();
+        rSPanelGradiente1 = new rspanelgradiente.RSPanelGradiente();
+        labTitulo = new javax.swing.JLabel();
+        botFecharNormal = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jDataVencimento = new com.toedter.calendar.JDateChooser();
+        botBuscarCliente = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        jDataEvento = new com.toedter.calendar.JDateChooser();
+        painelInformacao = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        radioEnderecoProprio = new javax.swing.JRadioButton();
+        radioOutroEndereco = new javax.swing.JRadioButton();
+        txtCidade = new javax.swing.JTextField();
+        txtRua = new javax.swing.JTextField();
+        txtBairro = new javax.swing.JTextField();
+        txtNumero = new javax.swing.JTextField();
+        jPanel5 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextAreaObservacao = new javax.swing.JTextArea();
+        labDataRealizado = new javax.swing.JLabel();
+        labNomeCliente = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        labNome = new javax.swing.JLabel();
+        botBuscarProduto = new javax.swing.JButton();
+        labQuantidade = new javax.swing.JLabel();
+        jSpinQuantidade = new com.toedter.components.JSpinField();
+        botAdicionarProduto = new javax.swing.JButton();
+        botExcluirProduto = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tabProdutoOrcamento = new rojerusan.RSTableMetro();
+        jLabel9 = new javax.swing.JLabel();
+        labNomeProduto = new javax.swing.JLabel();
+        labValorOrcamento = new javax.swing.JLabel();
+        labValo = new javax.swing.JLabel();
+        labValorProduto = new javax.swing.JLabel();
+        rSPanelGradiente2 = new rspanelgradiente.RSPanelGradiente();
+        botSalvarOrcmento = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setUndecorated(true);
+        setResizable(false);
+
+        rSPanelGradiente1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        labTitulo.setFont(new java.awt.Font("SansSerif", 1, 36)); // NOI18N
+        labTitulo.setForeground(new java.awt.Color(255, 255, 255));
+        labTitulo.setText("NOVO ORÇAMENTO");
+
+        botFecharNormal.setBackground(new java.awt.Color(255, 0, 0));
+        botFecharNormal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/icons/fechar34px.png"))); // NOI18N
+        botFecharNormal.setContentAreaFilled(false);
+        botFecharNormal.setFocusable(false);
+        botFecharNormal.setOpaque(true);
+        botFecharNormal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botFecharNormalActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout rSPanelGradiente1Layout = new javax.swing.GroupLayout(rSPanelGradiente1);
+        rSPanelGradiente1.setLayout(rSPanelGradiente1Layout);
+        rSPanelGradiente1Layout.setHorizontalGroup(
+            rSPanelGradiente1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(rSPanelGradiente1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(labTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(botFecharNormal, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        rSPanelGradiente1Layout.setVerticalGroup(
+            rSPanelGradiente1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(rSPanelGradiente1Layout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(labTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(5, 5, 5))
+            .addGroup(rSPanelGradiente1Layout.createSequentialGroup()
+                .addComponent(botFecharNormal, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), javax.swing.BorderFactory.createTitledBorder(null, "Informações Entrega", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12)))); // NOI18N
+
+        jLabel2.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jLabel2.setText("Nome Cliente:");
+
+        jLabel4.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jLabel4.setText("Data Realizada:");
+
+        jLabel5.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jLabel5.setText("Data Vencimento:");
+
+        jDataVencimento.setForeground(new java.awt.Color(0, 0, 204));
+        jDataVencimento.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+
+        botBuscarCliente.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        botBuscarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/icons/buscar18px.png"))); // NOI18N
+        botBuscarCliente.setText("BUSCAR");
+        botBuscarCliente.setFocusable(false);
+        botBuscarCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botBuscarClienteActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jLabel6.setText("Data Evento:");
+
+        jDataEvento.setForeground(new java.awt.Color(0, 0, 204));
+        jDataEvento.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+
+        painelInformacao.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), javax.swing.BorderFactory.createTitledBorder(null, "Informação Para Entrega", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("SansSerif", 1, 12)))); // NOI18N
+
+        jLabel10.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jLabel10.setText("Rua:");
+
+        jLabel11.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jLabel11.setText("Cidade Entrega:");
+
+        jLabel12.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jLabel12.setText("Numero:");
+
+        jLabel13.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jLabel13.setText("Bairro:");
+
+        jLabel14.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jLabel14.setText("Endereço Próprio:");
+
+        EnderecoProprio.add(radioEnderecoProprio);
+        radioEnderecoProprio.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        radioEnderecoProprio.setText("SIM");
+        radioEnderecoProprio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioEnderecoProprioActionPerformed(evt);
+            }
+        });
+
+        EnderecoProprio.add(radioOutroEndereco);
+        radioOutroEndereco.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        radioOutroEndereco.setText("NÃO");
+        radioOutroEndereco.setFocusable(false);
+        radioOutroEndereco.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioOutroEnderecoActionPerformed(evt);
+            }
+        });
+
+        txtCidade.setBackground(new java.awt.Color(240, 240, 240));
+        txtCidade.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+        txtCidade.setForeground(new java.awt.Color(0, 0, 204));
+        txtCidade.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtCidadeFocusGained(evt);
+            }
+        });
+        txtCidade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCidadeActionPerformed(evt);
+            }
+        });
+        txtCidade.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtCidadeKeyReleased(evt);
+            }
+        });
+
+        txtRua.setBackground(new java.awt.Color(240, 240, 240));
+        txtRua.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+        txtRua.setForeground(new java.awt.Color(0, 0, 204));
+        txtRua.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtRuaKeyReleased(evt);
+            }
+        });
+
+        txtBairro.setBackground(new java.awt.Color(240, 240, 240));
+        txtBairro.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+        txtBairro.setForeground(new java.awt.Color(0, 0, 204));
+        txtBairro.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtBairroKeyReleased(evt);
+            }
+        });
+
+        txtNumero.setBackground(new java.awt.Color(240, 240, 240));
+        txtNumero.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+        txtNumero.setForeground(new java.awt.Color(0, 0, 204));
+        txtNumero.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtNumeroKeyReleased(evt);
+            }
+        });
+
+        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Observação", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("SansSerif", 1, 12))); // NOI18N
+
+        jTextAreaObservacao.setColumns(20);
+        jTextAreaObservacao.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jTextAreaObservacao.setRows(5);
+        jScrollPane2.setViewportView(jTextAreaObservacao);
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane2)
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(1, 1, 1))
+        );
+
+        javax.swing.GroupLayout painelInformacaoLayout = new javax.swing.GroupLayout(painelInformacao);
+        painelInformacao.setLayout(painelInformacaoLayout);
+        painelInformacaoLayout.setHorizontalGroup(
+            painelInformacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelInformacaoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(painelInformacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel14)
+                    .addComponent(jLabel11)
+                    .addComponent(jLabel10))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(painelInformacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(painelInformacaoLayout.createSequentialGroup()
+                        .addComponent(txtRua)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel12)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(painelInformacaoLayout.createSequentialGroup()
+                        .addComponent(txtCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel13)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtBairro, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE))))
+            .addGroup(painelInformacaoLayout.createSequentialGroup()
+                .addGap(148, 148, 148)
+                .addComponent(radioEnderecoProprio)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(radioOutroEndereco)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        painelInformacaoLayout.setVerticalGroup(
+            painelInformacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelInformacaoLayout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addGroup(painelInformacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel14)
+                    .addComponent(radioEnderecoProprio)
+                    .addComponent(radioOutroEndereco))
+                .addGap(9, 9, 9)
+                .addGroup(painelInformacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jLabel11)
+                    .addComponent(txtCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel13)
+                    .addComponent(txtBairro, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(8, 8, 8)
+                .addGroup(painelInformacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jLabel10)
+                    .addComponent(txtRua, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel12)
+                    .addComponent(txtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        labDataRealizado.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+        labDataRealizado.setForeground(new java.awt.Color(0, 0, 153));
+
+        labNomeCliente.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+        labNomeCliente.setForeground(new java.awt.Color(0, 0, 204));
+        labNomeCliente.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                labNomeClienteFocusGained(evt);
+            }
+        });
+        labNomeCliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                labNomeClienteKeyReleased(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(painelInformacao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(labDataRealizado, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jDataVencimento, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jDataEvento, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(labNomeCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(botBuscarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(4, 4, 4)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(labNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2)
+                    .addComponent(botBuscarCliente))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(painelInformacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5)
+                    .addComponent(jDataVencimento, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labDataRealizado, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6)
+                    .addComponent(jDataEvento, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 1, 750, -1));
+
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel3.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), javax.swing.BorderFactory.createTitledBorder(null, "Produtos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12)))); // NOI18N
+        jPanel3.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+
+        labNome.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        labNome.setText("NOME:");
+
+        botBuscarProduto.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        botBuscarProduto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/icons/buscar18px.png"))); // NOI18N
+        botBuscarProduto.setText("BUSCAR");
+        botBuscarProduto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botBuscarProdutoActionPerformed(evt);
+            }
+        });
+
+        labQuantidade.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        labQuantidade.setText("Quantidade:");
+
+        jSpinQuantidade.setValue(1);
+
+        botAdicionarProduto.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        botAdicionarProduto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/icons/maisAzul18px.png"))); // NOI18N
+        botAdicionarProduto.setText("ADICIONAR");
+        botAdicionarProduto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botAdicionarProdutoActionPerformed(evt);
+            }
+        });
+
+        botExcluirProduto.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        botExcluirProduto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/icons/delete18px.png"))); // NOI18N
+        botExcluirProduto.setText("EXCLUIR");
+        botExcluirProduto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botExcluirProdutoActionPerformed(evt);
+            }
+        });
+
+        tabProdutoOrcamento.setAutoCreateRowSorter(true);
+        tabProdutoOrcamento.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Produto", "Valor", "Quantidade", "SubTotal"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tabProdutoOrcamento.setAltoHead(40);
+        tabProdutoOrcamento.setAutoscrolls(false);
+        tabProdutoOrcamento.setColorBackgoundHead(new java.awt.Color(250, 250, 250));
+        tabProdutoOrcamento.setColorFilasBackgound1(new java.awt.Color(209, 209, 209));
+        tabProdutoOrcamento.setColorFilasBackgound2(new java.awt.Color(209, 209, 209));
+        tabProdutoOrcamento.setColorFilasForeground1(new java.awt.Color(102, 102, 102));
+        tabProdutoOrcamento.setColorFilasForeground2(new java.awt.Color(102, 102, 102));
+        tabProdutoOrcamento.setColorForegroundHead(new java.awt.Color(51, 51, 51));
+        tabProdutoOrcamento.setColorSelBackgound(new java.awt.Color(40, 53, 147));
+        tabProdutoOrcamento.setFuenteFilas(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        tabProdutoOrcamento.setFuenteFilasSelect(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        tabProdutoOrcamento.setFuenteHead(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        tabProdutoOrcamento.setGridColor(new java.awt.Color(204, 204, 204));
+        tabProdutoOrcamento.setGrosorBordeFilas(0);
+        tabProdutoOrcamento.setGrosorBordeHead(0);
+        tabProdutoOrcamento.setIntercellSpacing(new java.awt.Dimension(0, 0));
+        tabProdutoOrcamento.setMultipleSeleccion(false);
+        tabProdutoOrcamento.setOpaque(false);
+        tabProdutoOrcamento.setRowHeight(30);
+        tabProdutoOrcamento.setSelectionBackground(new java.awt.Color(40, 53, 147));
+        tabProdutoOrcamento.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(tabProdutoOrcamento);
+        if (tabProdutoOrcamento.getColumnModel().getColumnCount() > 0) {
+            tabProdutoOrcamento.getColumnModel().getColumn(0).setResizable(false);
+            tabProdutoOrcamento.getColumnModel().getColumn(1).setResizable(false);
+            tabProdutoOrcamento.getColumnModel().getColumn(2).setResizable(false);
+            tabProdutoOrcamento.getColumnModel().getColumn(3).setResizable(false);
+        }
+
+        jLabel9.setFont(new java.awt.Font("SansSerif", 1, 24)); // NOI18N
+        jLabel9.setText("Valor Orçamento:");
+
+        labNomeProduto.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+        labNomeProduto.setForeground(new java.awt.Color(0, 0, 255));
+
+        labValorOrcamento.setFont(new java.awt.Font("SansSerif", 1, 24)); // NOI18N
+
+        labValo.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        labValo.setText("Valor Produto:");
+
+        labValorProduto.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+        labValorProduto.setForeground(new java.awt.Color(255, 0, 0));
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel9)
+                        .addGap(10, 10, 10)
+                        .addComponent(labValorOrcamento, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(labQuantidade)
+                            .addComponent(labNome))
+                        .addGap(4, 4, 4)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jSpinQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(38, 38, 38)
+                                .addComponent(labValo)
+                                .addGap(6, 6, 6)
+                                .addComponent(labValorProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(53, 53, 53)
+                                .addComponent(botAdicionarProduto))
+                            .addComponent(labNomeProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 19, Short.MAX_VALUE)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(botBuscarProduto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(botExcluirProduto, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)))
+                    .addComponent(jScrollPane1))
+                .addGap(0, 0, 0))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addComponent(labNomeProduto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(labNome)
+                    .addComponent(botBuscarProduto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(11, 11, 11)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(4, 4, 4)
+                        .addComponent(labQuantidade))
+                    .addComponent(jSpinQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(4, 4, 4)
+                        .addComponent(labValo))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(labValorProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(botAdicionarProduto)
+                    .addComponent(botExcluirProduto))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel9)
+                    .addComponent(labValorOrcamento, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
+
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 335, 750, -1));
+
+        rSPanelGradiente2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        botSalvarOrcmento.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        botSalvarOrcmento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/icons/salvar18px.png"))); // NOI18N
+        botSalvarOrcmento.setText("SALVAR");
+        botSalvarOrcmento.setFocusable(false);
+        botSalvarOrcmento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botSalvarOrcmentoActionPerformed(evt);
+            }
+        });
+
+        jButton2.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/icons/voltar18px.png"))); // NOI18N
+        jButton2.setText("VOLTAR");
+        jButton2.setFocusable(false);
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout rSPanelGradiente2Layout = new javax.swing.GroupLayout(rSPanelGradiente2);
+        rSPanelGradiente2.setLayout(rSPanelGradiente2Layout);
+        rSPanelGradiente2Layout.setHorizontalGroup(
+            rSPanelGradiente2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rSPanelGradiente2Layout.createSequentialGroup()
+                .addComponent(jButton2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(botSalvarOrcmento, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        rSPanelGradiente2Layout.setVerticalGroup(
+            rSPanelGradiente2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rSPanelGradiente2Layout.createSequentialGroup()
+                .addGap(1, 1, 1)
+                .addGroup(rSPanelGradiente2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(botSalvarOrcmento)
+                    .addComponent(jButton2))
+                .addGap(1, 1, 1))
+        );
+
+        jPanel1.add(rSPanelGradiente2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 673, 750, -1));
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(rSPanelGradiente1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(1, 1, 1))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(rSPanelGradiente1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(1, 1, 1))
+        );
+
+        pack();
+        setLocationRelativeTo(null);
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void botFecharNormalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botFecharNormalActionPerformed
+
+        dispose();
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botFecharNormalActionPerformed
+
+    private void botSalvarOrcmentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botSalvarOrcmentoActionPerformed
+
+        if (status == 'n') {
+            if (cliente != null) {
+                if (!(txtBairro.getText().equals("")) && !(txtCidade.getText().equals("")) && !(txtNumero.getText().equals(""))) {
+                    if (listOrcamentoProduto.isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "ENTRE COM PRODUTOS PARA O ORÇAMENTO!");
+                    } else {
+                        if (jDataEvento.getDate() == null) {
+                            JOptionPane.showMessageDialog(null, "ENTRE COM AS INFORMAÇÕES DO EVENTO!");
+                        } else {
+                            if (jDataVencimento.getDate() == null) {
+                                JOptionPane.showMessageDialog(null, "ENTRE COM AS INFORMAÇÕES DO VENCIMENTO DO ORÇAMENTO!");
+                            } else {
+                                orcamento.setBairroEntrega(txtBairro.getText());
+                                orcamento.setCidadeEntrega(txtCidade.getText());
+                                orcamento.setRuaEntrega(txtRua.getText());
+                                try {
+                                    if (jTextAreaObservacao.equals("")) {
+                                    } else {
+                                        orcamento.setObservacao(jTextAreaObservacao.getText());
+                                    }
+                                    orcamento.setNumeroEntrega(Integer.parseInt(txtNumero.getText()));
+                                    if (compareTo(jDataVencimento.getDate(), hoje) == 1) {
+                                        if (compareTo(jDataEvento.getDate(), jDataVencimento.getDate()) == 1) {
+                                            orcamento.setDataVencimento(jDataVencimento.getDate());
+                                            orcamento.setDataEvento(jDataEvento.getDate());
+                                            orcamento.setDataRealizado(hoje);
+                                            orcamento.setClienteCod(cliente);
+                                            orcamento.setListaOrcamento(listOrcamentoProduto);
+                                            orcamento.setValorOrc(orcamento.getListaValor());
+                                            ControleOrcamento contOrcamento = new ControleOrcamento();
+                                            contOrcamento.gravarOrcamento(orcamento);
+                                            dispose();
+                                        } else {
+                                            JOptionPane.showMessageDialog(null, "DATA DO EVENTO TEM QUE SER MAIOR QUE A DATA DE VENCIMENTO!");
+                                        }
+                                    } else {
+                                        JOptionPane.showMessageDialog(null, "DATA DE VENCIMENTO TEM QUE SER MAIOR QUE A DATA REALIZADA!");
+                                    }
+                                } catch (NumberFormatException e) {
+                                    JOptionPane.showMessageDialog(null, "ENTRE SOMENTE COM NÚMEROS NO CAMPO NÚMERO!");
+                                    txtNumero.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.red));
+                                    txtNumero.setText("");
+                                }
+
+                            }
+                        }
+                    }
+
+                }
+            }
+        } else if (status == 'a') {
+            if (cliente != null) {
+                if (!(txtBairro.getText().equals("")) && !(txtCidade.getText().equals("")) && !(txtNumero.getText().equals(""))) {
+
+                    if (listOrcamentoProduto.isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "ENTRE COM PRODUTOS PARA O ORÇAMENTO!");
+                    } else {
+                        if (jDataEvento.getDate() == null) {
+                            JOptionPane.showMessageDialog(null, "ENTRE COM AS INFORMAÇÕES DO EVENTO!");
+                        } else {
+                            if (jDataVencimento.getDate() == null) {
+                                JOptionPane.showMessageDialog(null, "ENTRE COM AS INFORMAÇÕES DO VENCIMENTO DO ORÇAMENTO!");
+                            } else {
+                                orcamento.setBairroEntrega(txtBairro.getText());
+                                orcamento.setCidadeEntrega(txtCidade.getText());
+                                orcamento.setRuaEntrega(txtRua.getText());
+                                try {
+                                    orcamento.setObservacao(jTextAreaObservacao.getText());
+                                    orcamento.setOrcCod(orcamento.getOrcCod());
+                                    orcamento.setNumeroEntrega(Integer.parseInt(txtNumero.getText()));
+                                    orcamento.setDataVencimento(jDataVencimento.getDate());
+                                    orcamento.setDataEvento(jDataEvento.getDate());
+                                    orcamento.setDataRealizado(hoje);
+                                    orcamento.setClienteCod(cliente);
+                                    orcamento.setListaOrcamento(listOrcamentoProduto);
+                                    orcamento.setValorOrc(orcamento.getListaValor());
+                                    ControleOrcamento contOrcamento = new ControleOrcamento();
+                                    contOrcamento.salvarAlteracao(orcamento);
+                                    dispose();
+                                } catch (NumberFormatException e) {
+                                    JOptionPane.showMessageDialog(null, "ENTRE SOMENTE COM NÚMEROS NO CAMPO NÚMERO!");
+                                    txtNumero.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.red));
+                                    txtNumero.setText("");
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "ENTRE COM AS INFORMAÇÕES QUE ESTÃO FALTANDO!");
+
+                    if (txtBairro.getText().equals("")) {
+                        txtBairro.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.red));
+                        txtBairro.requestFocus();
+                    }
+
+                    if (txtNumero.getText().equals("")) {
+                        txtNumero.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.red));
+                        txtNumero.requestFocus();
+                    }
+                    if (txtRua.getText().equals("")) {
+                        txtRua.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.red));
+                        txtRua.requestFocus();
+                    }
+
+                    if (txtCidade.getText().equals("")) {
+                        txtCidade.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.red));
+                        txtCidade.requestFocus();
+                    }
+
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(null, "SELECIONE UM CLIENTE PARA REALIZAR O ORÇAMENTO!");
+                labNomeCliente.requestFocus();
+                labNomeCliente.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.red));
+            }
+        } else if (status == 'c') {
+
+            List<Orcamento> listOrcame = new ArrayList<>();
+            listOrcame.add(orcamento);
+            try {
+                String relatorio = "src/relatorio/relatorioOrcamento.jasper";
+                JDialog dialogRel = new JDialog(this, "Impressão de Orçamento", true);
+                dialogRel.setSize(1000, 750);
+                dialogRel.setLocationRelativeTo(null);
+                Map parametros = new HashMap();
+                //paramentros.put("listaRecebimento", controlador.getFUncaoControlador()):
+                JasperPrint relatorioOrc = JasperFillManager.fillReport(relatorio, parametros, new JRBeanCollectionDataSource(listOrcame));
+                JasperViewer jasperRelatorio = new JasperViewer(relatorioOrc);
+                dialogRel.setContentPane(jasperRelatorio.getContentPane());
+                dialogRel.setVisible(true);
+//viewReport(relatorioOrc, false);
+                ControleOrcamento cOrcameno = new ControleOrcamento();
+                cOrcameno.gravarBaixaEstoque(orcamento);
+                dispose();
+            } catch (Exception e) {
+
+            }
+        }
+
+//            
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botSalvarOrcmentoActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+
+        dispose();
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void radioOutroEnderecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioOutroEnderecoActionPerformed
+        if (cliente != null) {
+            setarCampoEndereçoTrue();
+        } else {
+            EnderecoProprio.clearSelection();
+            JOptionPane.showMessageDialog(null, "   SELECIONE UM CLIENTE!!");
+        }
+    }//GEN-LAST:event_radioOutroEnderecoActionPerformed
+
+
+    private void botBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botBuscarClienteActionPerformed
+
+        BuscarCliente busCli = new BuscarCliente(null, true, false);
+        busCli.setVisible(true);
+
+        cliente = busCli.getTipoSelecionado();
+        if (cliente != null) {
+            labNomeCliente.setText(cliente.getClienteNome());
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botBuscarClienteActionPerformed
+
+    private void radioEnderecoProprioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioEnderecoProprioActionPerformed
+
+        if (cliente != null) {
+            txtBairro.setText(cliente.getClienteBairro());
+            txtCidade.setText(cliente.getClienteCidade());
+            txtNumero.setText(String.valueOf(cliente.getClienteRuaNumero()));
+            txtRua.setText(cliente.getClienteRua());
+            setarCampoEndereçoFalse();
+
+        } else {
+            JOptionPane.showMessageDialog(null, "   SELECIONE UM CLIENTE!");
+            EnderecoProprio.clearSelection();
+            radioEnderecoProprio.setFocusable(false);
+        }
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_radioEnderecoProprioActionPerformed
+
+    private void txtCidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCidadeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCidadeActionPerformed
+
+    private void botBuscarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botBuscarProdutoActionPerformed
+
+        if (valor == true) {
+            BuscarProdutoOrcamento busProduto = new BuscarProdutoOrcamento(null, true, false, listOrcamentoProduto);
+            busProduto.setVisible(true);
+            produto = busProduto.getTipoSelecionado();
+            if (produto != null) {
+                labNomeProduto.setText(produto.getProdutoNome());
+                labValorProduto.setText(doubleString(produto.getProdutoValorVenda()));
+            } else {
+
+            }
+        } else {
+            ControleOrcamento cO = new ControleOrcamento();
+            listOrcamentoProduto.clear();
+            listOrcamentoProduto.addAll(cO.atualizarListaOrcamento(orcamento));
+            orcamento.setListaOrcamento(new ArrayList<>());
+            orcamento.setListaOrcamento(listOrcamentoProduto);
+            atualizarTabela();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botBuscarProdutoActionPerformed
+
+    private void botAdicionarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botAdicionarProdutoActionPerformed
+
+        int quantidadeProduto = jSpinQuantidade.getValue();
+        if (produto != null) {
+            if (quantidadeProduto >= 1) {
+                OrcamentoProduto orcaProduto = new OrcamentoProduto();
+                orcaProduto.setValor(produto.getProdutoValorVenda());
+                orcaProduto.setProdutoCod(produto);
+                orcaProduto.setQuantidade(jSpinQuantidade.getValue());
+                orcaProduto.setOrcCod(orcamento);
+                listOrcamentoProduto.add(orcaProduto);
+                orcamento.setListaOrcamento(listOrcamentoProduto);
+                atualizarTabela();
+                produto = null;
+                labNomeProduto.setText("");
+                labValorProduto.setText("");
+                jSpinQuantidade.setValue(1);
+                labValorOrcamento.setText(doubleString(orcamento.getListaValor()));
+            } else {
+                JOptionPane.showMessageDialog(null, "ENTRE COM UMA QUANTIDADE \n "
+                        + "                     VALIDA!");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "SELECIONE UM PRODUTO PARA ADICIONAR!");
+        }
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botAdicionarProdutoActionPerformed
+
+    private void botExcluirProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botExcluirProdutoActionPerformed
+
+        int linhaExcluirProduto = -1;
+
+        linhaExcluirProduto = tabProdutoOrcamento.getSelectedRow();
+
+        if (linhaExcluirProduto != -1) {
+            OrcamentoProduto orcProduto = listOrcamentoProduto.get(linhaExcluirProduto);
+            listOrcamentoProduto.remove(orcProduto);
+            System.out.println(listOrcamentoProduto);
+            orcamento.setListaOrcamento(new ArrayList<>());
+            orcamento.setListaOrcamento(listOrcamentoProduto);
+            atualizarTabela();
+            labValorOrcamento.setText(doubleString(orcamento.getListaValor()));
+        } else {
+            JOptionPane.showMessageDialog(null, "SELECIONE UM PRODUTO PARA EXCLUIR!");
+        }
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botExcluirProdutoActionPerformed
+
+    private void labNomeClienteKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_labNomeClienteKeyReleased
+
+        if (labNomeCliente.getText().equals("")) {
+            labNomeCliente.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.red));
+        } else {
+            labNomeCliente.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, Color.BLACK));
+
+        }
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_labNomeClienteKeyReleased
+
+    private void labNomeClienteFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_labNomeClienteFocusGained
+        if (labNomeCliente.getText().equals("")) {
+            labNomeCliente.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.red));
+        } else {
+            labNomeCliente.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, Color.BLACK));
+
+        }
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_labNomeClienteFocusGained
+
+    private void txtCidadeFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCidadeFocusGained
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCidadeFocusGained
+
+    private void txtCidadeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCidadeKeyReleased
+
+        if (txtCidade.getText().equals("")) {
+
+            txtCidade.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.red));
+        } else {
+            txtCidade.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.BLACK));
+        }
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCidadeKeyReleased
+
+    private void txtRuaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRuaKeyReleased
+
+        if (txtRua.getText().equals("")) {
+
+            txtRua.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.red));
+        } else {
+            txtRua.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.BLACK));
+        }
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtRuaKeyReleased
+
+    private void txtBairroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBairroKeyReleased
+
+        if (txtBairro.getText().equals("")) {
+
+            txtBairro.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.red));
+        } else {
+            txtBairro.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.BLACK));
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtBairroKeyReleased
+
+    private void txtNumeroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumeroKeyReleased
+
+        if (txtNumero.getText().equals("")) {
+
+            txtNumero.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.red));
+        } else {
+            txtNumero.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.BLACK));
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNumeroKeyReleased
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Windows".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(OrcamentoNovo.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(OrcamentoNovo.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(OrcamentoNovo.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(OrcamentoNovo.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the dialog */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                OrcamentoNovo dialog = new OrcamentoNovo(new javax.swing.JFrame(), true, null);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup EnderecoProprio;
+    private javax.swing.JButton botAdicionarProduto;
+    private javax.swing.JButton botBuscarCliente;
+    private javax.swing.JButton botBuscarProduto;
+    private javax.swing.JButton botExcluirProduto;
+    private javax.swing.JButton botFecharNormal;
+    private javax.swing.JButton botSalvarOrcmento;
+    private javax.swing.JButton jButton2;
+    private com.toedter.calendar.JDateChooser jDataEvento;
+    private com.toedter.calendar.JDateChooser jDataVencimento;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private com.toedter.components.JSpinField jSpinQuantidade;
+    private javax.swing.JTextArea jTextAreaObservacao;
+    private javax.swing.JLabel labDataRealizado;
+    private javax.swing.JLabel labNome;
+    private javax.swing.JLabel labNomeCliente;
+    private javax.swing.JLabel labNomeProduto;
+    private javax.swing.JLabel labQuantidade;
+    private javax.swing.JLabel labTitulo;
+    private javax.swing.JLabel labValo;
+    private javax.swing.JLabel labValorOrcamento;
+    private javax.swing.JLabel labValorProduto;
+    private javax.swing.JPanel painelInformacao;
+    private rspanelgradiente.RSPanelGradiente rSPanelGradiente1;
+    private rspanelgradiente.RSPanelGradiente rSPanelGradiente2;
+    private javax.swing.JRadioButton radioEnderecoProprio;
+    private javax.swing.JRadioButton radioOutroEndereco;
+    private rojerusan.RSTableMetro tabProdutoOrcamento;
+    private javax.swing.JTextField txtBairro;
+    private javax.swing.JTextField txtCidade;
+    private javax.swing.JTextField txtNumero;
+    private javax.swing.JTextField txtRua;
+    // End of variables declaration//GEN-END:variables
+
+    public void darTamanhoAColuna() {
+        tabProdutoOrcamento.getColumnModel().getColumn(0).setPreferredWidth(300);
+        tabProdutoOrcamento.getColumnModel().getColumn(1).setPreferredWidth(35);
+        tabProdutoOrcamento.getColumnModel().getColumn(2).setPreferredWidth(35);
+        tabProdutoOrcamento.getColumnModel().getColumn(3).setPreferredWidth(55);
+
+        //  seuScrollPane.setBorder(BorderFactory.createBevelBorder(0));
+    }
+
+    public void setarCampoEndereçoFalse() {
+        txtBairro.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, Color.BLACK));
+        txtCidade.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, Color.BLACK));
+        txtNumero.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, Color.BLACK));
+        txtRua.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, Color.BLACK));
+        txtBairro.setEditable(false);
+        txtCidade.setEditable(false);
+        txtNumero.setEditable(false);
+        txtRua.setEditable(false);
+    }
+
+    public void setarCampoEndereçoTrue() {
+        txtBairro.setText("");
+        txtCidade.setText("");
+        txtNumero.setText("");
+        txtRua.setText("");
+        txtBairro.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.red));
+        txtCidade.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.red));
+        txtNumero.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.red));
+        txtRua.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.red));
+        txtBairro.setEditable(true);
+        txtCidade.setEditable(true);
+        txtNumero.setEditable(true);
+        txtRua.setEditable(true);
+    }
+
+    private void atualizarTabela() {
+
+        while (modelo.getRowCount() > 0) {
+            // apaga a primeira linha
+            modelo.removeRow(0);
+        }
+        for (OrcamentoProduto oP : listOrcamentoProduto) {
+            // adiciona uma linha na tabela
+            // o object criado tem que ter a mesma quantidade
+            // de elementos que foi definida na tabela, 
+            // como também os mesmos tipos
+            modelo.addRow(new Object[]{oP.getProdutoCod().getProdutoNome(), doubleString(oP.getValor()), oP.getQuantidade(), doubleString(oP.getValor() * oP.getQuantidade())});
+        }
+
+    }
+
+    public String doubleString(double d) {
+        Locale.setDefault(new Locale("pt", "BR"));
+        DecimalFormat df = new DecimalFormat("#,##0.00", new DecimalFormatSymbols(new Locale("pt", "BR")));
+        String s = df.format(d);
+        return s;
+    }
+
+    public void setCamposOrcamento() {
+        cliente = orcamento.getClienteCod();
+        botBuscarCliente.setVisible(false);
+        labNomeCliente.setText(orcamento.getClienteCod().getClienteNome());
+        labDataRealizado.setText(formatar.format(orcamento.getDataRealizado()));
+        txtBairro.setText(orcamento.getBairroEntrega());
+        txtCidade.setText(orcamento.getCidadeEntrega());
+        txtNumero.setText(String.valueOf(orcamento.getNumeroEntrega()));
+        txtRua.setText(orcamento.getRuaEntrega());
+        jTextAreaObservacao.setText(orcamento.getObservacao());
+        listOrcamentoProduto.addAll(orcamento.getListaOrcamento());
+        atualizarTabela();
+        jDataEvento.setDate(orcamento.getDataEvento());
+        jDataVencimento.setDate(orcamento.getDataVencimento());
+        labValorOrcamento.setText(doubleString(orcamento.getValorOrc()));
+    }
+
+    private int compareTo(Date dataIni, Date dataFim) {
+        int ini = Integer.parseInt(new SimpleDateFormat("yyyyMMdd").format(dataIni));
+        int fim = Integer.parseInt(new SimpleDateFormat("yyyyMMdd").format(dataFim));
+        return (ini == fim) ? 0 : (ini > fim) ? 1 : -1;
+    }
+
+    private void desabilitarCampos() {
+        txtBairro.setEnabled(false);
+        txtCidade.setEnabled(false);
+        txtNumero.setEnabled(false);
+        txtRua.setEnabled(false);
+        radioEnderecoProprio.setEnabled(false);
+        radioOutroEndereco.setEnabled(false);
+        jTextAreaObservacao.setEnabled(false);
+        jDataEvento.setEnabled(false);
+        jDataVencimento.setEnabled(false);
+        tabProdutoOrcamento.setEnabled(false);
+        botExcluirProduto.setVisible(false);
+        botAdicionarProduto.setVisible(false);
+        labValo.setVisible(false);
+        labQuantidade.setVisible(false);
+        botBuscarProduto.setVisible(false);
+        labNomeProduto.setVisible(false);
+        labNome.setVisible(false);
+        jSpinQuantidade.setVisible(false);
+        tabProdutoOrcamento.getColumnModel().getColumn(0).setPreferredWidth(200);
+//        if(compareTo(orcamento.getDataVencimento(), hoje)){
+//            
+//        }
+    }
+
+    public void validarCampos() {
+        setMaxLength(txtBairro, 45);
+        setMaxLength(txtCidade, 75);
+        setMaxLength(txtRua, 75);
+    }
+
+}

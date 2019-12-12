@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Venda Periodo" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="78179c46-6f17-4053-ae02-5e27023fe43d">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\Maycon\\Documents\\NetBeansProjects\\DepositoDeBebidass\\src\\relatorio\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="inicio" class="java.util.Date"/>
+	<parameter name="fim" class="java.util.Date"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="class" class="java.lang.Class">
+		<fieldDescription><![CDATA[class]]></fieldDescription>
+	</field>
+	<field name="nrItem" class="java.lang.Integer">
+		<fieldDescription><![CDATA[nrItem]]></fieldDescription>
+	</field>
+	<field name="produtoCod" class="modelo.Produto">
+		<fieldDescription><![CDATA[produtoCod]]></fieldDescription>
+	</field>
+	<field name="quantidade" class="java.lang.Integer">
+		<fieldDescription><![CDATA[quantidade]]></fieldDescription>
+	</field>
+	<field name="valor" class="java.lang.Double">
+		<fieldDescription><![CDATA[valor]]></fieldDescription>
+	</field>
+	<field name="vendaCod" class="modelo.Venda">
+		<fieldDescription><![CDATA[vendaCod]]></fieldDescription>
+	</field>
+	<variable name="inicio" class="java.util.Date"/>
+	<variable name="fim" class="java.util.Date"/>
+	<variable name="quantidade_1" class="java.lang.Integer" resetType="Group" resetGroup="grupProduto" calculation="Sum">
+		<variableExpression><![CDATA[$F{quantidade}]]></variableExpression>
+	</variable>
+	<group name="grupProduto">
+		<groupExpression><![CDATA[$F{produtoCod}]]></groupExpression>
+		<groupHeader>
+			<band height="25">
+				<textField>
+					<reportElement x="12" y="0" width="124" height="20" uuid="569d85ca-9871-4fb0-bee8-7a93a0816052"/>
+					<textElement>
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{produtoCod}.getProdutoNome()]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="grupProduto">
+					<reportElement x="163" y="1" width="129" height="20" uuid="59211c2e-065c-4ba2-8829-fd909367f3e1"/>
+					<textElement textAlignment="Right">
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{quantidade_1}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="0" y="21" width="555" height="2" uuid="7bf024ea-9261-4490-9014-59e7cb0846b7"/>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="125" splitType="Stretch">
+			<staticText>
+				<reportElement x="15" y="68" width="79" height="24" uuid="e96f5428-cb8e-4db2-9ff2-244638a42d65"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="16"/>
+				</textElement>
+				<text><![CDATA[PERÍODO:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="233" y="68" width="105" height="20" uuid="b121cd36-e381-4787-bd29-5cc6068060b0"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{fim}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="112" y="68" width="91" height="20" uuid="f682cbc0-a5ba-47b5-a211-eb060d00335a"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{inicio}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="203" y="68" width="25" height="20" uuid="a941207c-88b7-4d20-aa68-3ce6a2b79333"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[À]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="12" y="93" width="100" height="31" uuid="72ba1513-6650-4589-bc26-330dbc134941"/>
+				<textElement verticalAlignment="Middle">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PRODUTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="163" y="94" width="129" height="31" uuid="025745e1-590d-41b5-88f0-02699ca88405"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[QUANTIDADE]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="59" backcolor="#0000CC" uuid="26d4bed1-dc1c-47cf-9559-ca30e0054dcc"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="56" y="0" width="434" height="59" forecolor="#FFFFFF" uuid="f7129a1b-aa7a-47e9-9c9c-ddd978aeebae"/>
+				<textElement>
+					<font size="40"/>
+				</textElement>
+				<text><![CDATA[VENDA POR PERÍODO]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
